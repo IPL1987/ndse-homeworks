@@ -1,0 +1,17 @@
+{
+  "name": "date",
+  "version": "1.0.0",
+  "description": "task_1",
+  "main": "index.js",
+  "bin": {
+    "getDate": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "IPL_87",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^17.7.2"
+  }
+}
