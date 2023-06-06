@@ -1,0 +1,14 @@
+{
+  "name": "make-a-number",
+  "version": "1.0.0",
+  "description": "task_2",
+  "main": "index.js",
+  "bin": {
+    "guess": "./guessNum.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "IPL_87",
+  "license": "ISC"
+}
