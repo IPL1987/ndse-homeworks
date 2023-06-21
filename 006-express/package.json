@@ -1,0 +1,15 @@
+{
+  "name": "006-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "api.js",
+  "scripts": {
+    "start": "node api.js"
+  },
+  "author": "IPL1987",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "uuid": "^9.0.0"
+  }
+}
