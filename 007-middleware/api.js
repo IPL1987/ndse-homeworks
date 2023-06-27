@@ -6,7 +6,7 @@ const error = require('./middleware/error-404');
 const app = express();
 
 app.use(express.json());
-app.use('/public/book', route);
+app.use('/api/books', route);
 app.use(logger);
 app.use(error);
 

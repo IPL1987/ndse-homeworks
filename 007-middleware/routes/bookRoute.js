@@ -44,12 +44,12 @@ const stor = {
   ],
 };
 
-router.get('/api/books', (req, res) => {
+router.get('/', (req, res) => {
   const { books } = stor
   res.json(books)
 })
 
-router.get('/api/books/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const { books } = stor
   const { id } = req.params
   const idx = books.findIndex(el => el.id === id)
@@ -62,7 +62,7 @@ router.get('/api/books/:id', (req, res) => {
   }
 })
 
-router.get('/api/books/:id/download', (req, res) => {
+router.get('/:id/download', (req, res) => {
   const { books } = stor
   const { id } = req.params
   const index = books.findIndex(book => book.id === id)
@@ -74,7 +74,7 @@ router.get('/api/books/:id/download', (req, res) => {
   }
 })
 
-router.post('/api/books/:id/upload', fileMulter.single('file'), (req, res) => {
+router.post('/:id/upload', fileMulter.single('file'), (req, res) => {
   const { books } = stor;
   const { id } = req.params;
   if (!req.file) {
@@ -96,7 +96,7 @@ router.post('/api/books/:id/upload', fileMulter.single('file'), (req, res) => {
   }
 });
 
-router.post('/api/books', (req, res) => {
+router.post('', (req, res) => {
   const { books } = stor
   const { title, description, authors, favorite, fileCover, fileName, fileBook } = req.body
   const newBook = new Book(title, description, authors, favorite, fileCover, fileName, fileBook)
@@ -105,7 +105,7 @@ router.post('/api/books', (req, res) => {
   res.json(newBook)
 })
 
-router.put('/api/books/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const { books } = stor
   const { title, description, authors, favorite, fileCover, fileName, fileBook } = req.body
   const { id } = req.params
@@ -128,7 +128,7 @@ router.put('/api/books/:id', (req, res) => {
   }
 })
 
-router.delete('/api/books/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const { books } = stor
   const { id } = req.params
   const index = books.findIndex(book => book.id === id)
