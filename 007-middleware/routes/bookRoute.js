@@ -52,10 +52,10 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
   const { books } = stor
   const { id } = req.params
-  const idx = books.findIndex(el => el.id === id)
+  const book = books.findIndex(el => el.id === id)
 
-  if (idx !== -1) {
-    res.json(books[idx])
+  if (book !== -1) {
+    res.json(books[book])
   } else {
     res.status(404)
     res.json('404 | страница не найдена')
@@ -63,37 +63,35 @@ router.get('/:id', (req, res) => {
 })
 
 router.get('/:id/download', (req, res) => {
+  
   const { books } = stor
   const { id } = req.params
-  const index = books.findIndex(book => book.id === id)
-  if (index !== -1 && books[index].fileBook) {
-    res.download(books[index].fileBook, books[index].fileName)
+  const book = books.find(el => el.id === id)
+  if (book) {
+    res.download(books[book].fileBook, books[book].fileName)
   } else {
     res.status(404)
-    res.json('404 | страница не найдена')
+    res.json('404 | Книга не найдена')
   }
 })
 
 router.post('/:id/upload', fileMulter.single('file'), (req, res) => {
-  const { books } = stor;
-  const { id } = req.params;
-  if (!req.file) {
-    res.json(null);
-    return;
-  }
-
-  const { path } = req.file;
-  const index = books.findIndex(el => el.id === id);
-
-  if (index !== -1) {
-    books[index] = {
-      ...books[index],
-      fileBook: path
+  const fileBook = req.file;
+    if (!fileBook){
+        res.json('Ошибка при загрузке файла');
+        return;
     }
-  } else {
-    res.status(404);
-    res.json('404 | страница не найдена');
-  }
+
+    const {books} = stor;
+    const {title, desc, authors, favorite, fileCover} = req.body;
+    const fileName = fileBook.originalname;
+
+    const newBook = new Book(title, desc, authors, favorite, fileCover, fileName, fileBook);
+    books.push(newBook);
+
+    res.status(201);
+
+    res.json('Файл загружен');
 });
 
 router.post('', (req, res) => {
@@ -109,10 +107,10 @@ router.put('/:id', (req, res) => {
   const { books } = stor
   const { title, description, authors, favorite, fileCover, fileName, fileBook } = req.body
   const { id } = req.params
-  const index = books.findIndex(book => book.id === id)
-  if (index !== -1) {
-    books[index] = {
-      ...books[index],
+  const book = books.findIndex(book => book.id === id)
+  if (book !== -1) {
+    books[book] = {
+      ...books[book],
       title,
       description,
       authors,
@@ -121,7 +119,7 @@ router.put('/:id', (req, res) => {
       fileName,
       fileBook
     }
-    res.json(books[index])
+    res.json(books[book])
   } else {
     res.status(404)
     res.json('404 | страница не найдена')
@@ -131,9 +129,9 @@ router.put('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const { books } = stor
   const { id } = req.params
-  const index = books.findIndex(book => book.id === id)
-  if (index !== -1) {
-    books.splice(index, 1)
+  const book = books.findIndex(book => book.id === id)
+  if (book !== -1) {
+    books.splice(book, 1)
     res.status(200)
     res.send("Ok");
   } else {
