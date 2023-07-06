@@ -1,28 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const fileMulter = require('../middleware/file');
-const { v4: uuid } = require('uuid')
-
-class Book {
-  constructor(
-    title = "",
-    description = "",
-    authors = "",
-    favorite = "",
-    fileCover = "",
-    fileName = "",
-    fileBook = ""
-  ) {
-    this.id = uuid();
-    this.title = title;
-    this.description = description;
-    this.authors = authors;
-    this.favorite = favorite;
-    this.fileCover = fileCover;
-    this.fileName = fileName;
-    this.fileBook = fileBook
-  }
-}
+const Book = require('../Book/book')
 
 const stor = {
   books: [
@@ -58,16 +37,15 @@ router.get('/:id', (req, res) => {
     res.json(books[book])
   } else {
     res.status(404)
-    res.json('404 | страница не найдена')
+    res.json('404 | Cтраница не найдена')
   }
 })
 
 router.get('/:id/download', (req, res) => {
-  
   const { books } = stor
   const { id } = req.params
-  const book = books.find(el => el.id === id)
-  if (book) {
+  const book = books.find(book => book.id === id)
+  if (book && books[book].fileBook) {
     res.download(books[book].fileBook, books[book].fileName)
   } else {
     res.status(404)
@@ -76,25 +54,31 @@ router.get('/:id/download', (req, res) => {
 })
 
 router.post('/:id/upload', fileMulter.single('file'), (req, res) => {
-  const fileBook = req.file;
-    if (!fileBook){
-        res.json('Ошибка при загрузке файла');
-        return;
+  const { books } = stor;
+  const { id } = req.params;
+  if (!req.file) {
+    res.json(null);
+    return;
+  }
+
+  const { path, filename } = req.file;
+  const book = books.find((el) => el.id === id);
+
+  if (book ) {
+    books[book] = {
+      ...books[book],
+      fileBook: path,
+      fileName: filename
     }
-
-    const {books} = stor;
-    const {title, desc, authors, favorite, fileCover} = req.body;
-    const fileName = fileBook.originalname;
-
-    const newBook = new Book(title, desc, authors, favorite, fileCover, fileName, fileBook);
-    books.push(newBook);
-
-    res.status(201);
-
-    res.json('Файл загружен');
+    res.json('Файл загружен')
+  } else {
+    res.status(404);
+    res.json('404 | Ошибка загрузки' );
+  }
 });
 
-router.post('', (req, res) => {
+
+router.post('/', (req, res) => {
   const { books } = stor
   const { title, description, authors, favorite, fileCover, fileName, fileBook } = req.body
   const newBook = new Book(title, description, authors, favorite, fileCover, fileName, fileBook)
@@ -122,7 +106,7 @@ router.put('/:id', (req, res) => {
     res.json(books[book])
   } else {
     res.status(404)
-    res.json('404 | страница не найдена')
+    res.json('404 | Cтраница не найдена')
   }
 })
 
@@ -136,7 +120,7 @@ router.delete('/:id', (req, res) => {
     res.send("Ok");
   } else {
     res.status(404)
-    res.json('404 | страница не найдена')
+    res.json('404 | Cтраница не найдена')
   }
 })
 
