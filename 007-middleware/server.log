@@ -1,0 +1,11 @@
+1687684830886 GET /api/books
+1687685671853 GET /api/books
+1687685685150 GET /api/books
+1687685795467 GET /api/books
+1687685994241 GET /api/books
+1687686017092 POST /api/books/:id/upload
+1687686033711 GET /api/books
+1687686049517 POST /api/books/:id/download
+1687686417215 POST /api/books/:id/upload
+1687686648748 POST /public/book/upload
+1687686675536 POST /public/book/upload
