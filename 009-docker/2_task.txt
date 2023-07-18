@@ -1,0 +1,54 @@
+1. Загрузите образ node версии 15.14:
+
+PS E:\NETOLOGY\ndse-homeworks\009-docker> docker pull node:19.9.0
+19.9.0: Pulling from library/node
+bd73737482dd: Pulling fs layer
+6710592d62aa: Pulling fs layer
+75256935197e:
+c1e5026c6457: Waiting
+f2e4b4cbd0b8: Waiting
+bd73737482dd: Pull complete
+6710592d62aa: Pull complete
+75256935197e: Pull complete
+c1e5026c6457: Pull complete
+f2e4b4cbd0b8: Pull complete
+aa0a28bddc08: Pull complete
+a43acb05766e: Pull complete
+777f451f077e: Pull complete
+Digest: sha256:92f06fc13bcc09f1ddc51f6ebf1aa3d21a6532b74f076f224f188bc6b9317570
+Status: Downloaded newer image for node:19.9.0
+docker.io/library/node:19.9.0
+
+2. Запустите контейнер node в интерактивном режиме подключения терминала, поименуйте его `mynode`, передайте две переменные среды `NAME=<ваше имя>` и `SURNAME=<ваша фамилия>`:
+
+E:\NETOLOGY\ndse-homeworks>docker run -it -e NAME=Igor -e SURNAME=Poznyak node:19.9.0
+Welcome to Node.js v19.9.0.
+
+3. В интерактивной среде выполнения node выполните скрипт, который выведет на экран приветсвтие: `Привет, <ваше имя> <ваша фамилия>!`, эти данные должны быть получены из переменных среды:
+
+console.log(`Привет, ${process.env.NAME} ${process.env.SURNAME}!`)
+Привет, Igor Poznyak!
+undefined
+
+4. Остановите контейнер
+
+PS E:\NETOLOGY\ndse-homeworks\009-docker> docker stop 3f1f8fd1db50
+3f1f8fd1db50
+
+5. Удалите образ node версии 19.9.0:
+
+PS E:\NETOLOGY\ndse-homeworks\009-docker> docker rm 3f1f8fd1db50
+3f1f8fd1db50
+PS E:\NETOLOGY\ndse-homeworks\009-docker> docker rmi 9b96288651e9
+Untagged: node:19.9.0
+Untagged: node@sha256:92f06fc13bcc09f1ddc51f6ebf1aa3d21a6532b74f076f224f188bc6b9317570
+Deleted: sha256:9b96288651e9506de13a50a1574ca4344f765ff5a23981a9a807b49f6a41918b     
+Deleted: sha256:beb230e0a5ba0a200f769c8a7c8b36a3bc128f0136d386d34783262a395c9e6f     
+Deleted: sha256:0dfb3c4cc2a48865655fd722ceda78a481fa496cba4f72fe0528787f1b6ae396     
+Deleted: sha256:0b101f9d3a9dc1c86c642ee6b6f246c1539edaebe2afa710c436cedef3acb7a8     
+Deleted: sha256:125548a4b496f8543755a30154a3a3df69ee19411f80cd035a3e00246a4f5b97     
+Deleted: sha256:36feb0901e7f619e7ade3b5b03fb2052a2475c4ad957209c2c08cf632350ef53     
+Deleted: sha256:a3272a636fa0f34dcb0e73163da955d3add60a99ebacf9c37bfa28bb86dca6af     
+Deleted: sha256:d8ca3862f8d4bd7ea0f417ed455f201a50a8c9cec242cc5de0abaed7c86d896a     
+Deleted: sha256:974e52a24adf98b37b8895f61b8d8d273b73a8596b80da491342936fa1751541     
+PS E:\NETOLOGY\ndse-homeworks\009-docker> 
