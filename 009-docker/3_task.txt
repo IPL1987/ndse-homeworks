@@ -1,0 +1,74 @@
+1. Загрузите образ node версии 19.9.0:
+
+PS E:\NETOLOGY\ndse-homeworks\009-docker> docker pull node:19.9.0
+19.9.0: Pulling from library/node
+bd73737482dd: Pull complete
+6710592d62aa: Pull complete
+75256935197e: Pull complete
+c1e5026c6457: Pull complete
+f2e4b4cbd0b8: Pull complete
+aa0a28bddc08: Pull complete
+a43acb05766e: Pull complete
+777f451f077e: Pull complete
+Digest: sha256:92f06fc13bcc09f1ddc51f6ebf1aa3d21a6532b74f076f224f188bc6b9317570
+Status: Downloaded newer image for node:19.9.0
+docker.io/library/node:19.9.0
+
+2. Запустите контейнер с именем `first_node` из образа node версии 19.9.0 в фоновом режиме, подключив папку `data` из текущей директории в `/var/first/data` контейнера:
+
+PS E:\NETOLOGY\ndse-homeworks> docker run --name first_node -it -v E:\NETOLOGY\ndse-homeworks\data\:/var/first/data -d node:19.9.0
+ba116321de76369cb028ac63361bdf0511acfd5f90546c838f74ead604cd06a3
+
+3. Запустите контейнер с именем `second_node` из образа node версии 19.9.0 в фоновом режиме, подключив папку `data` из текущей директории в `/var/second/data` контейнера:
+
+PS E:\NETOLOGY\ndse-homeworks> docker run --name second_node -it -v E:\NETOLOGY\ndse-homeworks\data\:/var/second/data -d node:19.9.0
+9172a8103db8c8142e4c04eed02024e0c72a1195da94b86c6a69825407ade048
+
+4. Подключитесь к контейнеру `first_node` с помощью exec и создайте текстовый файл любого содержания в `/var/first/data`:
+
+PS E:\NETOLOGY\ndse-homeworks> docker exec -it first_node /bin/sh
+# cd /var/first/data
+# echo "123" > data.txt
+# exit
+
+5. Добавьте еще один файл в папку `data` на хостовой машине:
+
+PS E:\NETOLOGY\ndse-homeworks> docker exec -it first_node /bin/sh
+# cd /var/first/data
+# echo "321" > data2.txt
+# exit
+
+6. Подключитесь к контейнеру `second_node` с помощью `exec` и получите список файлов в директории `/var/second/data`, выведете на экран содержимое файлов:
+
+PS E:\NETOLOGY\ndse-homeworks> docker exec -it second_node /bin/sh
+# cd /var/second/data
+# ls  
+data.txt  data2.txt
+
+7. Остановите оба контейнера:
+
+PS E:\NETOLOGY\ndse-homeworks> docker stop first_node second_node
+first_node
+second_node
+
+8. Удалите оба контейнера:
+
+
+9. Удалите образ node версии 19.9.0:
+
+PS E:\NETOLOGY\ndse-homeworks> docker rm 9172a8103db8 
+9172a8103db8
+PS E:\NETOLOGY\ndse-homeworks> docker rm ba116321de76 
+ba116321de76
+PS E:\NETOLOGY\ndse-homeworks> docker rmi node:19.9.0
+Untagged: node:19.9.0
+Untagged: node@sha256:92f06fc13bcc09f1ddc51f6ebf1aa3d21a6532b74f076f224f188bc6b9317570
+Deleted: sha256:9b96288651e9506de13a50a1574ca4344f765ff5a23981a9a807b49f6a41918b
+Deleted: sha256:beb230e0a5ba0a200f769c8a7c8b36a3bc128f0136d386d34783262a395c9e6f
+Deleted: sha256:0dfb3c4cc2a48865655fd722ceda78a481fa496cba4f72fe0528787f1b6ae396
+Deleted: sha256:0b101f9d3a9dc1c86c642ee6b6f246c1539edaebe2afa710c436cedef3acb7a8
+Deleted: sha256:125548a4b496f8543755a30154a3a3df69ee19411f80cd035a3e00246a4f5b97
+Deleted: sha256:36feb0901e7f619e7ade3b5b03fb2052a2475c4ad957209c2c08cf632350ef53
+Deleted: sha256:a3272a636fa0f34dcb0e73163da955d3add60a99ebacf9c37bfa28bb86dca6af
+Deleted: sha256:d8ca3862f8d4bd7ea0f417ed455f201a50a8c9cec242cc5de0abaed7c86d896a
+Deleted: sha256:974e52a24adf98b37b8895f61b8d8d273b73a8596b80da491342936fa1751541
