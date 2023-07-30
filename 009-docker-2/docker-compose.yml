@@ -1,0 +1,23 @@
+services:
+  storage:
+    image: redis
+    volumes:
+      - ./data:/data
+  counter:
+    image: ipl1987/counter:app
+    ports:
+      - 3001:3001
+    environment:
+      - PORT=3001
+      - REDIS_URL=redis://storage
+    depends_on:
+      - storage
+  library:
+    image: ipl1987/library-counter:app
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+      - HOST_URL=counter
+    depends_on:
+      - counter
