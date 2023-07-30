@@ -17,4 +17,6 @@ app.use(error);
 app.set('view engine', 'ejs');
 
 const PORT = process.env.PORT || 3000
-app.listen(PORT)
+app.listen(PORT, () => {
+  console.log(`Сервер слушает порт ${PORT}`);
+})
