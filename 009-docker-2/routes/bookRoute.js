@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const fileMulter = require('../middleware/file');
 const Book = require('../Book/book')
-const counter = require('./counterReq')
 
 const stor = {
   books: [
